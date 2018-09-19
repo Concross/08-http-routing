@@ -11,20 +11,21 @@ let basePath = '/api/v1/notes';
 *     POST request tests           *
 ************************************/
 describe('POST /api/v1/notes', () => {
+  let localRequest = request('http://localhost:3000');
+  let path = '/api/v1/notes';
   it('should return a 200 response', (done) => {
-    let content = JSON.stringify({
-      my: 'object',
-    });
-    apiRequest
-      .post(basePath)
+    let content = JSON.stringify({ id: 'f78bdee0-bb8a-11e8-ab67-2d7d3a33b11b', createdOn: '2018-09-18T21:36:56.783Z' });
+    console.log(content);
+    localRequest
+      .post(path)
+      .set('Content-Type', 'application/json')
       .send(content)
-      .expect(200, content, done);
+      .expect(200, JSON.parse(content), done);
   });
 
   it('should return a 400 response and Bad Request if req.body is invalid or absent', (done) => {
     apiRequest
       .post(basePath)
-      .send('')
       .expect(400, 'Bad Request', done);
   });
 });

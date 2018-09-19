@@ -1,5 +1,6 @@
 'use strict';
 
+const Notes = require('../models/notes');
 const router = require('../lib/router.js');
 
 let basePath = '/api/v1/notes';
@@ -19,19 +20,29 @@ let sendError = (res, code, msg) => {
   res.end();
 };
 
+let serverError = (res, err) => {
+  let error = { error: err };
+  res.statusCode = 500;
+  res.statusMessage = 'Server Error';
+  res.setHeader('Content-Type', 'application/json');
+  res.write(JSON.stringify(error));
+  res.end();
+
+};
+
 router.post(`${basePath}`, (req, res) => {
   // do stuff
-  if (req.body === '') {
-    // res.statusCode = 400;
-    // res.statusMessage = 'Bad Request';
-    // res.write('bad request');
-    // res.end();
 
-    sendError(res, 400, 'Bad Request');
+  if (req.body !== '') {
+    let record = new Notes(req.body.title, req.body.content);
+    record.save()
+      .then(data => { sendJSON(res, data); })
+      .catch(err => { serverError(res, err); });
 
   } else {
-    sendJSON(res, req.body);
+    sendError(res, 400, 'Bad Request');
   }
+
 });
 
 router.get(`${basePath}`, (req, res) => {

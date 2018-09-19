@@ -39,13 +39,13 @@ module.exports = (req) => {
 
     req.on('end', () => {
       try {
-        req.body = JSON.parse(text);
+        req.body = text === '' ? text : JSON.parse(text);
         resolve(req);
       }
       catch (err) {
         req.body = '';
-        // reject(err);
         resolve(req);
+        reject(err);
       }
 
     });
