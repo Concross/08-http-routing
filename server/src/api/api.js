@@ -33,14 +33,16 @@ let serverError = (res, err) => {
 router.post(`${basePath}`, (req, res) => {
   // do stuff
 
-  if (req.body === '') {
+  if (typeof req.body !== 'object') {
     sendError(res, 400, 'Bad Request');
 
   } else {
-    console.log(req.body);
     let record = new Notes(req.body.title, req.body.content);
     record.save()
-      .then(data => { sendJSON(res, data); })
+      .then(data => {
+        console.log(data);
+        sendJSON(res, data);
+      })
       .catch(err => { serverError(res, err); });
   }
 
