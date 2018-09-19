@@ -4,6 +4,7 @@ const Notes = require('../models/notes');
 const router = require('../lib/router.js');
 
 let basePath = '/api/v1/notes';
+
 let sendJSON = (res, data) => {
   res.statusCode = 200;
   res.statusMessage = 'OK';
