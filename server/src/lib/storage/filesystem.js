@@ -13,11 +13,11 @@ storage.get = id => {
 
     let file = `${databaseDir}/${id}.json`;
     fs.readFile(file, (err, data) => {
+      if (err) { reject(err); }
+
       if (data) {
         let obj = JSON.parse(data.toString());
         resolve(obj);
-      } else {
-        reject(`${id} not found`);
       }
     });
 
