@@ -86,10 +86,14 @@ router.delete(`${basePath}/:id`, (req, res) => {
     sendError(res, 400, 'Bad Request, unable to delete resource of undefinied ID');
 
   } else {
-    Notes.delete(req.query.id);
-    res.statusCode = 204;
-    res.statusMessage = 'DELETE SUCCESSFUL';
-    res.write('');
-    res.end();
+    Notes.delete(res, req.query.id)
+      .then(res => {
+        res.statusCode = 204;
+        res.statusMessage = 'DELETE SUCCESSFUL';
+        res.write('');
+        res.end();
+
+      })
+      .catch(err => serverError(res, err));
   }
 });

@@ -24,7 +24,7 @@ storage.get = id => {
   });
 };
 
-storage.delete = id => {
+storage.delete = (res, id) => {
 
   return new Promise((resolve, reject) => {
     if (!id) { reject('ERROR: No ID provided on data'); }
@@ -33,7 +33,7 @@ storage.delete = id => {
     fs.unlink(file, err => {
       if (err) { reject(err); }
       console.log(`${id} has been deleted`);
-
+      resolve(res);
     });
   });
 };

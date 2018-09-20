@@ -20,8 +20,8 @@ class Notes {
     return storage.get(noteId);
   }
 
-  static delete(noteId) {
-    storage.delete(noteId);
+  static delete(res, noteId) {
+    return storage.delete(res, noteId);
   }
 }
 
