@@ -24,6 +24,20 @@ storage.get = id => {
   });
 };
 
+storage.delete = id => {
+
+  return new Promise((resolve, reject) => {
+    if (!id) { reject('ERROR: No ID provided on data'); }
+
+    let file = `${databaseDir}/${id}.json`;
+    fs.unlink(file, err => {
+      if (err) { reject(err); }
+      console.log(`${id} has been deleted`);
+
+    });
+  });
+};
+
 storage.save = data => {
 
   return new Promise((resolve, reject) => {

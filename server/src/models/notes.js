@@ -19,6 +19,10 @@ class Notes {
   static get(noteId) {
     return storage.get(noteId);
   }
+
+  static delete(noteId) {
+    storage.delete(noteId);
+  }
 }
 
 module.exports = Notes;
