@@ -63,16 +63,19 @@ router.get(`${basePath}/:id`, (req, res) => {
   }
 });
 
-router.put(`${basePath}`, (req, res) => {
+router.put(`${basePath}/:id`, (req, res) => {
   // do stuff
   if (!req.query.id) {
     sendError(res, 400, 'Bad Request');
 
   } else {
-    let data = { id: req.query.id };
-    router.post(`${basePath}`, (req, res) => {
-      sendJSON(res, data);
-    });
+    Notes.get(req.query.id)
+      .then(data => {
+        data.lastUpdated = new Date();
+        sendJSON(res, data);
+      })
+      .catch(err => serverError(res, err));
+
   }
 });
 
