@@ -15,6 +15,10 @@ class Notes {
   save() {
     return storage.save(this);
   }
+
+  static get(noteId) {
+    return storage.get(noteId);
+  }
 }
 
 module.exports = Notes;

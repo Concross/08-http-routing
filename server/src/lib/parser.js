@@ -26,6 +26,9 @@ module.exports = (req) => {
           name:'John'
         }
        */
+    if (req.query.id) {
+      req.parsed.pathname += '/:id';
+    }
 
     if (!req.method.match(/POST|PUT|PATCH/)) {
       resolve(req);
@@ -39,12 +42,10 @@ module.exports = (req) => {
 
     req.on('end', () => {
       try {
-        req.body = text === '' ? text : JSON.parse(text);
+        req.body = JSON.parse(text);
         resolve(req);
       }
       catch (err) {
-        req.body = '';
-        resolve(req);
         reject(err);
       }
 

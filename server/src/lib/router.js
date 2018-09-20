@@ -21,11 +21,16 @@ router.route = (req, res) => {
   return parser(req)
     .then(req => {
       let handler = router.routes[req.method][req.parsed.pathname];
+      console.log(handler);
       console.log(req.method, req.parsed.pathname);
+
       if (handler) {
         return handler(req, res);
+
       } else {
+
         res.statusCode = 404;
+        res.statusMessage = 'resource not found';
         res.write('404: resource not found');
         res.end();
       }

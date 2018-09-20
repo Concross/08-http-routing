@@ -16,7 +16,7 @@ let sendJSON = (res, data) => {
 let sendError = (res, code, msg) => {
   res.statusCode = code;
   res.statusMessage = msg;
-  // res.setHeader('Content-Type', 'application/json');
+  res.setHeader('Content-Type', 'application/json');
   res.write(msg);
   res.end();
 };
@@ -35,29 +35,31 @@ router.post(`${basePath}`, (req, res) => {
   // do stuff
 
   if (typeof req.body !== 'object') {
+    console.log('bad request in post');
     sendError(res, 400, 'Bad Request');
 
   } else {
     let record = new Notes(req.body.title, req.body.content);
     record.save()
       .then(data => {
-        console.log(data);
         sendJSON(res, data);
       })
       .catch(err => { serverError(res, err); });
   }
 
+  console.log('no response');
+
 });
 
-router.get(`${basePath}`, (req, res) => {
+router.get(`${basePath}/:id`, (req, res) => {
   // do stuff
   if (!req.query.id) {
     sendError(res, 400, 'Bad Request');
 
   } else {
-    let data = { id: req.query.id };
-    sendJSON(res, data);
-
+    Notes.get(req.query.id)
+      .then(data => sendJSON(res, data))
+      .catch(err => serverError(res, err));
   }
 });
 
