@@ -1,11 +1,6 @@
 ![cf](https://i.imgur.com/7v5ASc8.png) Lab 08: HTTP Routing
 ======
 #### Feature Tasks
-* create the following directories to organize your code:
-  * `src`
-  * `src/lib`
-  * `src/api`
-  * `__test__`
 * create an HTTP server using the native NodeJS `http` module
 * create a custom parser module that:
   * uses promises to parse the JSON body of `POST` and `PUT` requests
